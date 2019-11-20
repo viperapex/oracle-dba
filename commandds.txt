@@ -1,0 +1,67 @@
+conn sys as sysdba
+shutdown
+startup
+select distinct profile from dba_users;
+desc dba_profiles;
+create profile John_Wick limit failed_login_attempts 3
+	password_life_time 5
+	password_lock_time 3
+	password_grace_time 0;
+create user john identified by john;
+grant connect,resource to john;
+conn john/john;
+show user;
+
+
+create table customer(id number(10),name varchar2(40),age number(10),address varchar2(40),salary number(10));
+insert into customer values(1,'Ankit',18,'kanpur',00);
+insert into customer values(2,'Ashish',19,'kanpur',50);
+insert into customer values(3,'david',19,'delhi',100);
+insert into customer values(4,'prahlad',19,'ranchi',900);
+select * from customer;
+drop trigger display_changes;
+create or replace trigger display_changes
+before update or delete or insert on customer
+for each row
+when(NEW.id>0)
+declare
+salary_diff number;
+begin
+salary_diff:=:NEW.salary-:OLD.salary;
+dbms_output.put_line('Old Salary'||:OLD.salary);
+dbms_output.put_line('New Salary'||:NEW.salary);
+dbms_output.put_line('changes'||salary_diff);
+end;
+
+create or replace procedure greetings as 
+BEGIN
+dbms_output.put_line('Hello world!');
+end;
+
+drop procedure greetings;
+
+
+Declare
+a number;
+b number;
+c number;
+procedure findMin(x IN number, y IN number, z OUT number) IS
+begin
+IF x<y THEN
+z:=x;
+else
+z:=y;
+end if;
+end;
+begin
+a:=23;
+b:=4;
+findMin(a,b,c);
+dbms_output.put_line('Minimum of (23,4):'||c);
+end;
+-------------------------
+create or replace procedure cbe(a in number, x out number) is
+BEGIN
+x:=a*a*a;
+DBMS_OUTPUT.PUT_LINE('cube of the number is '||x);
+end;

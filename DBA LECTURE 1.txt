@@ -1,0 +1,201 @@
+profile is a set of limits on db resource if u assign the profile then user cannot exceed limit.
+
+Benefits :
+
+1.it controlls resource consumption
+
+2.to manage account status and password expiration.
+
+Profile Properties.
+
+1.failed_login_attempts   :if a user attempts to login morethan a specified number of times the account will be locked.(default 10 times)
+
+2.password_life_time  :(default time is 108 days)
+
+3. password_reuse_time :(default time is unlimited ) the no. of days that must be passed before the same password can be used again.
+
+4.password_reuse_max :(default time is unlimited)
+
+5.password_lock_time  :the no. of days the account will be locked after the failed login attempts has been triggerd.(the default time is 1 day)
+
+6.password_grace_time : (default time is 7 days) the no. of grace days for used to change password .
+
+
+
+
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Jul 30 09:48:44 2019
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> MANOJ REDDY
+SP2-0734: unknown command beginning "MANOJ REDD..." - rest of line ignored.
+SQL>
+SQL>
+SQL> select distinct profile from dba_users;
+
+PROFILE
+------------------------------
+DEFAULT
+
+SQL> desc dba_profiles;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PROFILE                                   NOT NULL VARCHAR2(30)
+ RESOURCE_NAME                             NOT NULL VARCHAR2(32)
+ RESOURCE_TYPE                                      VARCHAR2(8)
+ LIMIT                                              VARCHAR2(40)
+
+SQL> select *from dba profiles where profiles="DEFAULT";
+select *from dba profiles where profiles="DEFAULT"
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select *from dba profiles where profile='DEFAULT';
+select *from dba profiles where profile='DEFAULT'
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select *from dab_profiles where profile='DEFAULT';
+select *from dab_profiles where profile='DEFAULT'
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select *from dba_profiles where profile='DEFAULT';
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        COMPOSITE_LIMIT                  KERNEL
+UNLIMITED
+
+DEFAULT                        SESSIONS_PER_USER                KERNEL
+UNLIMITED
+
+DEFAULT                        CPU_PER_SESSION                  KERNEL
+UNLIMITED
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        CPU_PER_CALL                     KERNEL
+UNLIMITED
+
+DEFAULT                        LOGICAL_READS_PER_SESSION        KERNEL
+UNLIMITED
+
+DEFAULT                        LOGICAL_READS_PER_CALL           KERNEL
+UNLIMITED
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        IDLE_TIME                        KERNEL
+UNLIMITED
+
+DEFAULT                        CONNECT_TIME                     KERNEL
+UNLIMITED
+
+DEFAULT                        PRIVATE_SGA                      KERNEL
+UNLIMITED
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        FAILED_LOGIN_ATTEMPTS            PASSWORD
+10
+
+DEFAULT                        PASSWORD_LIFE_TIME               PASSWORD
+UNLIMITED
+
+DEFAULT                        PASSWORD_REUSE_TIME              PASSWORD
+UNLIMITED
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        PASSWORD_REUSE_MAX               PASSWORD
+UNLIMITED
+
+DEFAULT                        PASSWORD_VERIFY_FUNCTION         PASSWORD
+NULL
+
+DEFAULT                        PASSWORD_LOCK_TIME               PASSWORD
+UNLIMITED
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+DEFAULT                        PASSWORD_GRACE_TIME              PASSWORD
+UNLIMITED
+
+
+16 rows selected.
+
+SQL>
+SQL> alter system set resource_limit=TRUE;
+
+System altered.
+
+SQL> create profile student
+  2  limit failed_login attempts 2
+  3  password_life_time 30
+  4  password_lock_time 7;
+limit failed_login attempts 2
+      *
+ERROR at line 2:
+ORA-02376: invalid or redundant resource
+
+
+SQL> create profile student
+  2  limit failed_login_attempts 2
+  3  password_life_time 30
+  4  password_lock_time 7
+  5  ;
+
+Profile created.
+
+SQL> alter user HR profile student;
+
+User altered.
+
+SQL> select *from dba_profile
+  2  ;
+select *from dba_profile
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select *from dba_profiles where profile='student';
+
+no rows selected
+
+SQL> create profile student
+  2    2  limit failed_login_attempts 2
+  3    3  password_life_time 30
+  4
+SQL>
+

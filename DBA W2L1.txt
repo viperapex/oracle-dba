@@ -1,0 +1,123 @@
+﻿How to manage user ,roles and privilages ?
+
+
+sQL> create user himali identified by himali;
+
+
+User created.
+
+
+SQL> select username,account_status,created from dba_users where username='himali';
+
+
+no rows selected 
+SQL> grant connect,resource to himali;
+
+
+Grant succeeded.
+
+
+SQL> select*from dba_role_privs where grantee='himali';
+
+
+no rows selected
+
+
+SQL> conn himali/himali;
+Connected.
+SQL> select* from user_role_privs;
+
+
+USERNAME                       GRANTED_ROLE                   ADM DEF OS_
+------------------------------ ------------------------------ --- --- ---
+HIMALI                         CONNECT                        NO  YES NO
+HIMALI                         RESOURCE                       NO  YES NO
+
+
+
+
+QL> conn sys as sysdba;
+Enter password:
+Connected.
+SQL> create role ROLE1;
+
+
+Role created.
+
+
+SQL> grant select_catalog_role to ROLE1;
+
+
+Grant succeeded.
+
+
+SQL> grant execute_catalog_role to ROLE1;
+
+
+Grant succeeded.
+
+
+SQL> grant ROLE1 to himali;
+
+
+Grant succeeded.
+
+
+SQL> select*from dba_role_privs where grantee=
+  2  'himali';
+
+
+no rows selected
+
+
+SQL> select*from role_role_privs where role='ROLE1';
+
+
+ROLE                           GRANTED_ROLE                   ADM
+------------------------------ ------------------------------ ---
+ROLE1                          EXECUTE_CATALOG_ROLE           NO
+ROLE1                          SELECT_CATALOG_ROLE            NO
+
+
+SQL> revoke ROLE1 from himali;
+
+
+Revoke succeeded.
+
+
+SQL> drop role ROLE1;
+
+
+Role dropped.
+
+
+SQL> select role from role_role_privs;
+
+
+ROLE
+------------------------------
+DBA
+DBA
+DBA
+XDBADMIN
+DBA
+IMP_FULL_DATABASE
+LOGSTDBY_ADMINISTRATOR
+DBA
+DBA
+EXP_FULL_DATABASE
+IMP_FULL_DATABASE
+
+
+ROLE
+------------------------------
+DBA
+EXECUTE_CATALOG_ROLE
+EXP_FULL_DATABASE
+DBA
+DBA
+SELECT_CATALOG_ROLE
+DBA
+
+
+18 rows selected.

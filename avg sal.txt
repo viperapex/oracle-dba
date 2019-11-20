@@ -1,0 +1,15 @@
+create table employee( NAME char(10),branch char(10),SALARY int(10),ID int(10));
+
+insert into employee values('Arthur','FINANCE',50000,401);
+insert into employee values('John','ENERGY',60000,402);
+insert into employee values('Sanjay','MANAGEMENT',60000,403);
+insert into employee values('Tanuja','ELECTRICAL',30000,401);
+
+
+Create or Replace procedure Avg_Salary 
+Is
+avg_salary number := 0;
+Begin
+select salary into avg_salary from employee where ID='401' ;
+End
+SELECT AVG(SALARY) FROM employee  where ID='401' ;

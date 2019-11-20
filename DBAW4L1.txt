@@ -1,0 +1,51 @@
+﻿create a table customers having its id , name , age, address and salary; insert any three tuples and then create a trigger for customer table that would fire for 
+update ,insert or delete operation performed on customer table. the trigger  will show the diff between the old values and new values
+
+
+
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Aug 20 09:48:18 2019
+
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+SQL> conn sys as sysdba;
+Enter password:
+Connected.
+SQL> create table customers(id number(32),name varchar2(40),age number(10),address varchar2(40),salary number(10));
+
+
+Table created.
+
+
+SQL> insert into customers values(12,'manoj',28,'delhi',1000);
+
+
+1 row created.
+
+
+SQL> insert into customers values(13,'prathap',28,'delhi',100);
+
+
+1 row created.
+
+
+SQL> insert into customers values(14,'prabhat',28,'delhi',10000);
+
+
+1 row created.
+
+
+SQL> create trigger display_changes before
+   update or delete or insert on customers for each row
+    when (NEW.id>0)
+    declare
+    salary_diff number;
+    begin
+    salary_diff:=:NEW.salary-:OLD.salary;
+    dbms_output.put_line('old salary'||:OLD.salary);
+    dbms_output.put_line('new salary'||:NEW.salary);
+   dbms_output.put_line('changes '||:salary_diff);.

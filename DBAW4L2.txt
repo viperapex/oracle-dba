@@ -1,0 +1,2 @@
+﻿A.  create table student which contains s id  s  name, sub1,sub2,sub3,,total,average.
+B.  create trigger which will be fired before insert operation of the gice table and automatically calculate the total and average of the marks.

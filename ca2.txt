@@ -1,0 +1,21 @@
+CREATE TABLE student_detail(stu_id varchar2(8) NOT NULL,
+stu_name varchar2(20) NULL,
+stu_section varchar2(20) NULL,
+stu_monitor varchar2(20) NULL,
+CONSTRAINT stu_id PRIMARY KEY(stu_id),
+CONSTRAINT stu_name UNIQUE(stu_name),
+CONSTRAINT stu_monitor FOREIGN KEY(stu_monitor)
+REFERENCES student_detail(stu_id));
+
+insert into student_detail values(11745546,'Divya','D1714','11745546');
+insert into student_detail values(11745596,'Ravi','D1714','11745546');
+insert into student_detail values(11745587,'Sanket','D1715','11745596');
+insert into student_detail values(11745647,'Shiva','D1716','11745587');
+insert into student_detail values(11945647,'Shivam','D1713','11945647');
+insert into student_detail values(11945617,'Priya','D1719','11945647');
+
+SELECT a.stu_id AS "Student ID",a.stu_name AS "Student Name",
+b.stu_id AS "Monitor ID",b.stu_name AS "Monitor Name"
+FROM student_detail a, student_detail b
+WHERE a.stu_monitor = b.stu_id;
+

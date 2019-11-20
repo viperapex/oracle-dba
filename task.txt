@@ -1,0 +1,22 @@
+1>
+create a field having id name address age salary
+insert any 3 tuples
+create a trigger for customer table that would fire for update insert or delete operation performed on the table
+the trigger will show the salary difference bw old and new values
+
+2>
+create a trigger that displays a message 'username is performing a traction on todays date'
+(if the username is ritu everytime a delete insert or update is made on table demo )
+create a trigger that displays this msg for every row that is affected by DML statement
+
+3>
+Create table student which contains;
+SID SNAME
+sub1,sub2,sub3,Total,Average
+
+4>
+Create trigger which will be fired before insert operation of the given table and automatically
+
+PL/SQL
+factorial program.
+

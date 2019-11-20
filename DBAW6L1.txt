@@ -1,0 +1,60 @@
+﻿PL/SQL- procedures
+
+
+A subprogram is a program unit/module that performs a particular task.
+
+
+procedures - These subprograms do not return a value directly, mainly used to perform a action.
+
+
+Declative part
+It is an optional part.
+
+
+Executable part
+THis is an mandatory part and contains statements that perform the designed action.
+
+
+Exception-handling.
+
+
+
+
+A procedure is created with the CREATE OR REPLACE procedure statement.
+
+
+3 types of parameters
+
+
+1.in parameter
+2. out parameter.
+3.in-out parameter.
+
+
+IS keyword is used for single parameter and AS keyword is used for multiple parameters.
+
+
+
+
+CREATE OR REPLACE PROCEDURE greetings AS
+BEGIN
+dbms_output.put_line('hello world');
+END;
+
+
+
+
+
+
+CREATE PROCEDURE p_120
+IS
+VAR_NAME VARCHAR2(40):='manoj';
+VAE_DEP VARCHAR2(40):='Databases';
+BEGIN
+DBMS_OUTPUT.PUT_LINE(VAR_NAME);
+END p_120;
+
+
+
+
+CREATE A PROCEDURE FOR FACTORIAL OF A NUMBER AND

@@ -1,0 +1,5 @@
+stratup mount
+
+....
+rman target /
+bacckup database

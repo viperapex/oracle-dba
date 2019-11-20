@@ -1,0 +1,23 @@
+create a table customer having field id,name, age, address, salary.
+insert any 3 tuples
+create a trigger for customer table that would fire for insert update or delete o[eration perofermed on the table.
+the trigger will show the salary difference between the old values and new values.
+
+
+1.	create table customer (id varchar2(4), name varchar2(12), age number(3), address varchar2(25), salary number(10));
+2.	insert into customer values('A12','Tanishq',19,'Punjab',100000000);
+3.	insert into customer values('A13','Rakshit',20,'Haryana',40000);
+4.	insert into customer values('A14','Rohit',19,'Bihar(Mokama)',90000);
+5.	drop trigger display_changes;
+create or replace trigger display_changes
+before update or delete or insert on customer
+for each row
+when(NEW.id>0)
+declare
+salary_diff number;
+begin
+salary_diff:=:NEW.salary-:OLD.salary;
+dbms_output.put_line('Old Salary'||:OLD.salary);
+dbms_output.put_line('New Salary'||:NEW.salary);
+dbms_output.put_line('changes'||salary_diff);
+end;

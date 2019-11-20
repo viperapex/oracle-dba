@@ -1,0 +1,138 @@
+create table stu_gen_detail(id int, name varchar2(40),age int, address varchar2(40),contact_number int);
+create table stu_marks_detail(id int,marks int,grade varchar2(10));
+insert into stu_gen_detail values(10,'amit',20,'delhi',666);
+insert into stu_gen_detail values(20,'amisha',23,'panipat',669);
+insert into stu_marks_detail values(10,56,'c');
+insert into stu_marks_detail values(10,56,'c');
+insert into stu_marks_detail values(20,87,'A');
+insert into stu_marks_detail values(20,74,'B');
+
+select * from stu_gen_detail;
+select * from stu_marks_detail;
+select * from stu_gen_detail cross join stu_marks_detail; 
+select * from stu_gen_detail inner join stu_marks_detail on stu_gen_detail.id=stu_marks_detail.id;
+select * from stu_gen_detail a,stu_gen_detail b;
+select * from stu_gen_detail s natural join stu_marks_detail;
+select * from stu_gen_detail s left outer join stu_marks_detail m on s.id=m.id;
+select * from stu_gen_detail s right outer join stu_marks_detail m on s.id=m.id;
+select * from stu_gen_detail s full outer join stu_marks_detail m on s.id=m.id;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create a table customer having field id,name, age, address, salary.
+insert any 3 tuples
+create a trigger for customer table that would fire for insert update or delete o[eration perofermed on the table.
+the trigger will show the salary difference between the old values and new values.
+
+
+1.	create table customer (id varchar2(4), name varchar2(12), age number(3), address varchar2(25), salary number(10));
+2.	insert into customer values('A12','Tanishq',19,'Punjab',100000000);
+3.	insert into customer values('A13','Rakshit',20,'Haryana',40000);
+4.	insert into customer values('A14','Rohit',19,'Bihar(Mokama)',90000);
+5.	drop trigger display_changes;
+create or replace trigger display_changes
+before update or delete or insert on customer
+for each row
+when(NEW.id>0)
+declare
+salary_diff number;
+begin
+salary_diff:=:NEW.salary-:OLD.salary;
+dbms_output.put_line('Old Salary'||:OLD.salary);
+dbms_output.put_line('New Salary'||:NEW.salary);
+dbms_output.put_line('changes'||salary_diff);
+end;
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DBA Practical
+1. 	create user himali identified by himali;
+2. 	select username,account_status,created from dba_users where 	username = 'himali';
+3. 	grant connect to himali;
+4. 	grant resource to himali;
+5. 	select * from dba_role_privs where grantee='himali';
+6. 	conn himali/himali;
+7. 	select * from user_role_privs;
+
+
+8. 	conn sys as sysdba
+9. 	create role ROLE1;
+10. grant select_catalog_role to ROLE1;
+11. grant execute_catalog_role to ROLE1;
+12. grant ROLE1 to himali;
+13. select * from role_role_privs where role='ROLE1';
+14. select * from user_role_privs;
+
+15. create table product_price_history (product_id number(5),product_name varchar2(32),supplier_name varchar2(32), unit_price number(7,2));
+
+16. create table product (product_id number(5), product_name varchar2(32), supplier_name varchar2(32), unit_price number(7,2));
+
+17. create trigger price_history_trigger
+before update of unit_price on product
+for each row
+begin
+insert into product_price_history values(:old.product_id, :old.product_name, :old.supplier_name, :old.unit_price);
+end;
+
+18. insert into product values(112,'Keyboard','john',1200);
+
+19. select *from product;
+
+20. update product set unit_price=1300 where product_id=112;
+
+
+Create procedure
+create or replace procedure greeting
+AS
+begin
+dbms_output.put_line('hello World');
+end;
+
+begin
+greeting;
+end;
+
+
+
+
+
+
+
+pass variable in procedure
+
+create or replace procedure P_120
+IS
+var_name varchar2(40):='Hey';
+var_dep varchar2(40):='Database';
+begin
+dbms_output.put_line('hello I am '||var_name||' from '||var_dep);
+end P_120;
+
+begin
+P_120;
+end;
+
+
+IN & OUT MODE
+Declare
+a number;
+b number;
+c number;
+procedure findMin(x IN number, y IN number, z OUT number) IS
+begin
+IF x<y THEN
+z:=x;
+else
+z:=y;
+end if;
+end;
+begin
+a:=23;
+b:=4;
+findMin(a,b,c);
+dbms_output.put_line('Minimum of (23,4):'||c);
+end;
+
+
+cube of a number 
+factorial of a number
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,191 @@
+﻿SQL*Plus: Release 10.2.0.1.0 - Production on Wed Jul 31 10:15:26 2019
+
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+
+SQL> conn sys as sysdba;
+Enter password:
+Connected.
+SQL> shutdown;
+Database closed.
+Database dismounted.
+ORACLE instance shut down.
+SQL> startup;
+ORACLE instance started.
+
+
+Total System Global Area  805306368 bytes
+Fixed Size                  1289996 bytes
+Variable Size             213909748 bytes
+Database Buffers          587202560 bytes
+Redo Buffers                2904064 bytes
+Database mounted.
+Database opened.
+SQL> select distinct profile form dba_users;
+select distinct profile form dba_users
+                             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+
+
+SQL> select distinct profile from dba_users;
+
+
+PROFILE
+------------------------------
+STUDENT
+DEFAULT
+
+
+SQL> desc dba_profiles;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PROFILE                                   NOT NULL VARCHAR2(30)
+ RESOURCE_NAME                             NOT NULL VARCHAR2(32)
+ RESOURCE_TYPE                                      VARCHAR2(8)
+ LIMIT                                              VARCHAR2(40)
+
+
+SQL> select *from dba_profiles where profile='student';
+
+
+no rows selected
+
+
+SQL> select *from dba_profiles where profile='STUDENT';
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        COMPOSITE_LIMIT                  KERNEL
+DEFAULT
+
+
+STUDENT                        SESSIONS_PER_USER                KERNEL
+DEFAULT
+
+
+STUDENT                        CPU_PER_SESSION                  KERNEL
+DEFAULT
+
+
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        CPU_PER_CALL                     KERNEL
+DEFAULT
+
+
+STUDENT                        LOGICAL_READS_PER_SESSION        KERNEL
+DEFAULT
+
+
+STUDENT                        LOGICAL_READS_PER_CALL           KERNEL
+DEFAULT
+
+
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        IDLE_TIME                        KERNEL
+DEFAULT
+
+
+STUDENT                        CONNECT_TIME                     KERNEL
+DEFAULT
+
+
+STUDENT                        PRIVATE_SGA                      KERNEL
+DEFAULT
+
+
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        FAILED_LOGIN_ATTEMPTS            PASSWORD
+2
+
+
+STUDENT                        PASSWORD_LIFE_TIME               PASSWORD
+30
+
+
+STUDENT                        PASSWORD_REUSE_TIME              PASSWORD
+DEFAULT
+
+
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        PASSWORD_REUSE_MAX               PASSWORD
+DEFAULT
+
+
+STUDENT                        PASSWORD_VERIFY_FUNCTION         PASSWORD
+DEFAULT
+
+
+STUDENT                        PASSWORD_LOCK_TIME               PASSWORD
+7
+
+
+
+
+PROFILE                        RESOURCE_NAME                    RESOURCE
+------------------------------ -------------------------------- --------
+LIMIT
+----------------------------------------
+STUDENT                        PASSWORD_GRACE_TIME              PASSWORD
+DEFAULT
+
+
+
+
+16 rows selected.
+
+
+SQL> create profile john limit failed_login_attempts 3
+  2  password_life_time 5
+  3  password_lock_time 3
+  4  password_grace_time 0;
+
+
+Profile created.
+
+
+SQL> create user manoj identified by manoj;
+
+
+User created.
+
+
+SQL> grant connect,resource to manoj;
+
+
+Grant succeeded.
+
+
+SQL> conn manoj/manoj;
+Connected.
+SQL> show users;
+SP2-0158: unknown SHOW option "users"
+SQL> show user;
+USER is "MANOJ"
+SQL>

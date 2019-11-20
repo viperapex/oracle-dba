@@ -1,0 +1,20 @@
+create a table emp1 employee with attribs employ id,name,salary,address and department insert three tuples into the table 
+make sure id should not be null and every employee name should be unique.
+a>create a trigger abc that fires when inserting ,deleting or updating the old table data values of employee should be copied in a OLD table emp2.
+
+CREATE TABLE EMPLOYEE_1 (emp_id INT NOT NULL, employee_name varchar(255), salary INT, address varchar(255), department varchar(20));
+INSERT INTO EMPLOYEE_1 (emp_id,employee_name,salary,address,department) VALUES ('13245','Jack','45000','Delhi','Finance');
+INSERT INTO EMPLOYEE_1 (emp_id,employee_name,salary,address,department) VALUES ('12345','John','55000','Mumbai','HR');
+INSERT INTO EMPLOYEE_1 (emp_id,employee_name,salary,address,department) VALUES ('13423','Jimmy','40000','OLD York','Accounting');
+
+CREATE TABLE EMPLOYEE_2 (emp_id INT NOT NULL, employee_name varchar(255), salary INT, address varchar(255), department varchar(20));
+
+create or replace trigger change
+before update or delete or insert on EMPLOYEE_1
+for each row
+when(OLD.emp_id>0)
+begin
+INSERT INTO EMPLOYEE_2 VALUES (:OLD.emp_id,:OLD.employee_name,:OLD.salary,:OLD.address,:OLD.department);
+end;
+INSERT INTO EMPLOYEE_1 (emp_id,employee_name,salary,address,department) VALUES (23423,'Jasper',35000,'Noida','Security');
+select * from EMPLOYEE_2;

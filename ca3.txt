@@ -1,0 +1,18 @@
+create table Employeeee (id varchar2(4), name varchar2(12), age number(3), address varchar2(25), salary number(10));
+
+insert into Employeeee values('A12','Tanishq',19,'Punjab',100000);
+insert into Employeeee values('A13','Rakshit',20,'Haryana',40000);
+insert into Employeeee values('A14','Rohit',19,'Bihar',90000);
+
+create or replace procedure findemp is
+emp Employeeee%rowtype;
+empsal number(6);
+begin
+select max(salary) into empsal from Employeeee where salary < 
+(select max(salary) from Employeeee where salary<
+(select max(salary) from Employeeee where name like 'A%' and address='LPU') and name like 'A%' and address='LPU') and name like 'A%' and address='LPU';
+select * into emp from Employeeee where salary=empsal and name like 'A%' and address='LPU';
+dbms_output.put_line('Emp ID'||emp.id);
+dbms_output.put_line('Emp Name'||emp.name);
+dbms_output.put_line('Emp Salary'||emp.salary);
+end
